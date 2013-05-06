@@ -1,0 +1,5 @@
+com.fellow.every.provider.kuaipan.KuaipanOAuthAPI.key=xxxxxxx
+com.fellow.every.provider.kuaipan.KuaipanOAuthAPI.secret=xxxxxxx
+
+com.fellow.every.provider.baidu.BaiduOAuth2API.key=xxxxxxx
+com.fellow.every.provider.baidu.BaiduOAuth2API.secret=xxxxxxx

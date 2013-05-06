@@ -1,0 +1,13 @@
+/target
+/api.properties
+/com.fellow.every.provider.baidu.BaiduOAuth2API.log
+/com.fellow.every.provider.box.BoxOAuth2API.log
+/com.fellow.every.provider.dropbox.DropboxOAuthAPI.log
+/com.fellow.every.provider.kaixin.KaixinOAuth2API.log
+/com.fellow.every.provider.kanbox.KanboxOAuth2API.log
+/com.fellow.every.provider.kuaipan.KuaipanOAuthAPI.log
+/com.fellow.every.provider.qq.QQOAuth2API.log
+/com.fellow.every.provider.renren.RenrenOAuth2API.log
+/com.fellow.every.provider.t163.T163OAuth2API.log
+/com.fellow.every.provider.weibo.WeiboOAuth2API.log
+/file3.big

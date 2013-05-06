@@ -1,0 +1,97 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <artifactId>every-cloud</artifactId>
+    <groupId>com.fellow.every</groupId>
+    <version>0.2a</version>
+  </parent>
+  
+  <groupId>com.fellow.every</groupId>
+  <artifactId>every-cloud-ext</artifactId>
+  <name>every-cloud-ext</name>
+  <version>0.2a</version>
+  <packaging>jar</packaging>
+  <url>https://github.com/fellow99/every-cloud-ext</url>
+  
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+  
+
+  <dependencies>
+  	<dependency>
+     <groupId>junit</groupId>
+     <artifactId>junit</artifactId>
+     <version>4.0</version>
+     <scope>test</scope>
+   </dependency>
+  	<dependency>
+  		<groupId>com.fellow.every</groupId>
+  		<artifactId>every-cloud-core</artifactId>
+  		<version>0.2a</version>
+  		<type>jar</type>
+  		<scope>compile</scope>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.apache.commons</groupId>
+  		<artifactId>commons-vfs2</artifactId>
+  		<version>2.0</version>
+  		<type>jar</type>
+  		<scope>compile</scope>
+  	</dependency>
+  	<dependency>
+  		<groupId>commons-vfs</groupId>
+  		<artifactId>commons-vfs</artifactId>
+  		<version>1.0</version>
+  		<type>jar</type>
+  		<scope>compile</scope>
+  	</dependency>
+  </dependencies>
+  
+  <scm>
+  	<connection>scm:https://github.com/fellow99/every-cloud-ext.git</connection>
+  	<developerConnection>scm:https://github.com/fellow99/every-cloud-ext.git</developerConnection>
+  	<url>https://github.com/fellow99/every-cloud-ext.git</url>
+  </scm>
+  
+  
+  <build>
+   <plugins>
+     <plugin>
+       <artifactId>maven-compiler-plugin</artifactId>
+       <configuration>
+         <source>1.5</source>
+         <target>1.5</target>
+       </configuration>
+     </plugin>
+     <plugin>
+       <groupId>net.unto.maven.plugins</groupId>
+       <artifactId>maven-junit4-plugin</artifactId>
+       <version>1.0-SNAPSHOT</version>
+       <executions>
+         <execution>
+           <phase>test</phase>
+           <goals>
+             <goal>test</goal>
+           </goals>
+         </execution>
+       </executions>
+     </plugin>
+   </plugins>
+ </build>
+ 
+ <pluginRepositories>
+   <pluginRepository>
+     <id>unto.net</id>
+     <url>http://repository.unto.net/maven/</url>
+     <releases>
+       <updatePolicy>daily</updatePolicy>
+       <checksumPolicy>warn</checksumPolicy>
+     </releases>
+     <snapshots>
+       <updatePolicy>daily</updatePolicy>
+       <checksumPolicy>warn</checksumPolicy>
+     </snapshots>
+   </pluginRepository>
+ </pluginRepositories>
+</project>
