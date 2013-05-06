@@ -35,7 +35,7 @@ public class EveryDiskProvider extends AbstractOriginatingFileProvider {
         Capability.GET_LAST_MODIFIED,
         Capability.ATTRIBUTES,
     }));
-    
+
 	@Override
 	public Collection<Capability> getCapabilities() {
         return capabilities;
