@@ -18,6 +18,9 @@ import com.fellow.util.Assert;
 
 public class KaixinUserAPI extends AbstractAPI implements UserAPI{
 
+	public static final String PROPERTY_APP_CHARSET = "app.charset";
+	public static final String DEFAULT_APP_CHARSET = "UTF-8";
+
 	public static final String APP_VERSION = "1.0";
 	public static final String APP_FORMAT = "JSON";
 	
@@ -25,6 +28,11 @@ public class KaixinUserAPI extends AbstractAPI implements UserAPI{
 
 	public static final String OP_USERS_ME = "/users/me";
 	public static final String OP_USERS_SHOW = "/users/show";
+
+	public String getCharset(){
+		String charset = this.getProperty(PROPERTY_APP_CHARSET);
+		return (charset == null || charset.length() == 0 ? DEFAULT_APP_CHARSET : charset);
+	}
 
 	public void assertInit(){
 		Assert.notNull(this.getHttpEngine(), "HTTPEngine Object is null");
@@ -47,10 +55,10 @@ public class KaixinUserAPI extends AbstractAPI implements UserAPI{
 		try {
 			HTTPRequest request = new HTTPRequest(URL_API + OP_USERS_ME);
 			request.addQueryParameters("access_token", accessToken.getAccessToken());
-			
-			HTTPResponseHandler handler = new StringHTTPResponseHandler();
+
+			StringHTTPResponseHandler handler = new StringHTTPResponseHandler(this.getCharset());
 			this.getHttpEngine().get(request, handler);
-			String info = handler.toString();
+			String info = handler.getString();
 			
 			if(info != null){
 				JSONObject json = new JSONObject(info);
@@ -72,10 +80,10 @@ public class KaixinUserAPI extends AbstractAPI implements UserAPI{
 			HTTPRequest request = new HTTPRequest(URL_API + OP_USERS_ME);
 			request.addQueryParameters("access_token", accessToken.getAccessToken());
 			request.addQueryParameters("fields", "uid,name,gender,hometown,city,status,logo120,logo50,birthday,bodyform,blood,marriage,trainwith,interest,favbook,favmovie,favtv,idol,motto,wishlist,intro,education,schooltype,school,class,year,career,company,dept,beginyear,beginmonth,endyear,endmonth,isStar,pinyin,online");
-			
-			HTTPResponseHandler handler = new StringHTTPResponseHandler();
+
+			StringHTTPResponseHandler handler = new StringHTTPResponseHandler(this.getCharset());
 			this.getHttpEngine().get(request, handler);
-			String info = handler.toString();
+			String info = handler.getString();
 			
 			if(info != null){
 				JSONObject json = new JSONObject(info);
@@ -99,11 +107,10 @@ public class KaixinUserAPI extends AbstractAPI implements UserAPI{
 			request.addQueryParameters("access_token", accessToken.getAccessToken());
 			request.addQueryParameters("fields", "uid,name,gender,hometown,city,status,logo120,logo50,birthday,bodyform,blood,marriage,trainwith,interest,favbook,favmovie,favtv,idol,motto,wishlist,intro,education,schooltype,school,class,year,career,company,dept,beginyear,beginmonth,endyear,endmonth,isStar,pinyin,online");
 			request.addQueryParameters("uids", id);
-			
-			
-			HTTPResponseHandler handler = new StringHTTPResponseHandler();
+
+			StringHTTPResponseHandler handler = new StringHTTPResponseHandler(this.getCharset());
 			this.getHttpEngine().get(request, handler);
-			String info = handler.toString();
+			String info = handler.getString();
 			
 			if(info != null){
 				JSONObject json = new JSONObject(info);

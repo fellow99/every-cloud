@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>   
+<beans   
+    xmlns="http://www.springframework.org/schema/beans"   
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"   
+    xmlns:p="http://www.springframework.org/schema/p"   
+    xmlns:context="http://www.springframework.org/schema/context"   
+    xsi:schemaLocation="http://www.springframework.org/schema/beans   
+    http://www.springframework.org/schema/beans/spring-beans-2.5.xsd   
+    http://www.springframework.org/schema/context   
+    http://www.springframework.org/schema/context/spring-context-2.5.xsd">   
+  
+    <!-- ①：对web包中的所有类进行扫描，以完成Bean创建和自动依赖注入的功能-->   
+    <context:component-scan base-package="com.fellow.every.one.web"/>   
+  
+    <!-- ②：启动Spring MVC的注解功能，完成请求和注解POJO的映射 -->
+    <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter"/>   
+  
+    <!--  ③：对模型视图名称的解析，即在模型视图名称添加前后缀 -->   
+    <bean name="viewResolver" class="org.springframework.web.servlet.view.XmlViewResolver">
+    	<property name="location" value="classpath:conf/springmvc-views.xml" />
+    </bean>
+    
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">   
+		<property name="maxUploadSize" value="104857600"/>   
+		<property name="maxInMemorySize" value="4096"/>   
+	</bean>  
+    <!--  错误处理，返回JSON格式的错误信息 -->
+    <!-- 
+	<bean id="exceptionResolver" 
+         class="org.springframework.web.servlet.view.json.exception.JsonExceptionResolver">
+        
+		<property name="exceptionView"><value>jsonView</value></property>
+		<property name="errorHandler">
+			<list>
+				<bean class="org.springframework.web.servlet.view.json.error.HttpStatusError" />
+				<bean class="org.springframework.web.servlet.view.json.error.ModelFlagError" />
+			</list>
+		</property>
+		<property name="exceptionHandler">
+			<list>
+				<bean class="org.springframework.web.servlet.view.json.exception.ExceptionMessageExceptionHandler" />
+				<bean class="org.springframework.web.servlet.view.json.exception.StackTraceExceptionHandler" />
+			</list>
+		</property>
+	</bean>
+	 --> 
+    
+</beans> 

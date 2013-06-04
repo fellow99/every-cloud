@@ -21,17 +21,25 @@ import com.fellow.util.Assert;
 
 public class T163UserAPI extends AbstractAPI implements UserAPI{
 
+	public static final String PROPERTY_APP_CHARSET = "app.charset";
+	public static final String DEFAULT_APP_CHARSET = "UTF-8";
+
 	public static final String URL_API = "openapi.kuaipan.cn";
 
 	public static final String OP_ACCOUNT = "/1/account_info";
 
 	private OAuth10Util oauth10Util;
-	
+
 	public OAuth10Util getOAuth10Util(){
 		if(oauth10Util == null){
-			new OAuth10Util(this.getAppKey(), this.getAppSecret());
+			oauth10Util = new OAuth10Util(this.getAppKey(), this.getAppSecret());
 		}
 		return oauth10Util;
+	}
+
+	public String getCharset(){
+		String charset = this.getProperty(PROPERTY_APP_CHARSET);
+		return (charset == null || charset.length() == 0 ? DEFAULT_APP_CHARSET : charset);
 	}
 	
 	public void assertInit(){
@@ -66,9 +74,10 @@ public class T163UserAPI extends AbstractAPI implements UserAPI{
 
 		try {
 			HTTPRequest request = new HTTPRequest(url);
-			HTTPResponseHandler handler = new StringHTTPResponseHandler();
+
+			StringHTTPResponseHandler handler = new StringHTTPResponseHandler(this.getCharset());
 			this.getHttpEngine().get(request, handler);
-			String info = handler.toString();
+			String info = handler.getString();
 			
 			if(info != null){
 				JSONObject json = new JSONObject(info);

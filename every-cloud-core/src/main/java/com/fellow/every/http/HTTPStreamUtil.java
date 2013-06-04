@@ -25,8 +25,26 @@ public class HTTPStreamUtil {
 			throw new ApiException(e);
 		}
 	}
-	
 
+	public static String toString(InputStream is, String charset) throws ServerException, ApiException{
+		try {
+		    BufferedReader in = new BufferedReader(new InputStreamReader(is, charset));
+		    StringBuffer buffer = new StringBuffer();
+		    String line = "";
+		    while ((line = in.readLine()) != null){
+		      buffer.append(line);
+		    }
+		    return buffer.toString();
+		} catch (IOException e) {
+			throw new ApiException(e);
+		}
+	}
+
+	
+	public static void bufferedWriting(OutputStream os, InputStream is)
+			 throws ServerException, ApiException {
+		bufferedWriting(os, is, -1, null);
+	}
 	
 	public static void bufferedWriting(OutputStream os, InputStream is, long total, ProgressListener listener)
 			 throws ServerException, ApiException {

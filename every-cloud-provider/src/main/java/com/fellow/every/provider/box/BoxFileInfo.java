@@ -3,10 +3,14 @@ package com.fellow.every.provider.box;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.fellow.every.base.AbstractFileInfo;
 import com.fellow.every.disk.FileInfo;
 import com.fellow.every.disk.FileType;
 
-public class BoxFileInfo implements FileInfo{
+public class BoxFileInfo extends AbstractFileInfo{
+	/** serialVersionUID */
+	private static final long serialVersionUID = 1L;
+	
 	private String parent;
 	private JSONObject json;
 	public BoxFileInfo(JSONObject json, String parent){

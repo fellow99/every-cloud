@@ -3,156 +3,44 @@ package com.fellow.every.provider.kaixin;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.fellow.every.base.AbstractUserInfo;
 import com.fellow.every.user.OnlineType;
 import com.fellow.every.user.SexType;
-import com.fellow.every.user.UserInfo;
 
-public class KaixinUserInfo extends KaixinAccountInfo implements UserInfo{
-	private JSONObject json;
+public class KaixinUserInfo extends AbstractUserInfo{
+	/** serialVersionUID */
+	private static final long serialVersionUID = 1L;
 	
 	public KaixinUserInfo(JSONObject json){
-		super(json);
-		this.json = getJson();
-	}
-
-	@Override
-	public String toString(){
-		return this.getClass().getName() + "-" + json;
-	}
-
-	@Override
-	public String getNickname() {
 		try {
-			return (json.has("screen_name") ?json.getString("screen_name") : null);
-		} catch (JSONException e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@Override
-	public String getDescription() {
-		try {
-			return (json.has("description") ?json.getString("description") : null);
-		} catch (JSONException e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@Override
-	public String getPhone() {
-		return null;
-	}
-
-	@Override
-	public String getEmail() {
-		return null;
-	}
-
-	@Override
-	public String getBirthday() {
-		return null;
-	}
-
-	@Override
-	public SexType getSex() {
-		try {
-			String str = (json.has("gender") ?json.getString("gender") : null);
-			if("0".equalsIgnoreCase(str)){
-				return SexType.MALE;
-			} else if("1".equalsIgnoreCase(str)){
-				return SexType.FEMALE;
+			this.setId(json.getString("uid"));
+			this.setName(json.getString("name"));
+			this.setNickname(json.has("screen_name") ?json.getString("screen_name") : null);
+			this.setDescription(json.has("description") ?json.getString("description") : null);
+			this.setCity(json.has("city") ?json.getString("city") : null);
+			this.setUrlHead(json.has("logo50") ?json.getString("logo50") : null);
+			this.setUrlHeadBig(json.has("logo120") ?json.getString("logo120") : null);
+			this.setMarriage(json.has("marriage") ?json.getString("marriage") : null);
+			
+			String sex = (json.has("gender") ?json.getString("gender") : null);
+			if("1".equalsIgnoreCase(sex)){
+				this.setSex(SexType.MALE);
+			} else if("2".equalsIgnoreCase(sex)){
+				this.setSex(SexType.FEMALE);
 			} else {
-				return SexType.UNKNOWN;
+				this.setSex(SexType.UNKNOWN);
 			}
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@Override
-	public OnlineType getOnline() {
-		try {
-			String str = (json.has("online") ?json.getString("online") : null);
-			if("1".equalsIgnoreCase(str)){
-				return OnlineType.ONLINE;
-			} else if("0".equalsIgnoreCase(str)){
-				return OnlineType.OFFLINE;
+			
+			String online = (json.has("online_status") ?json.getString("online_status") : null);
+			if("true".equalsIgnoreCase(online)){
+				this.setOnline(OnlineType.ONLINE);
+			} else if("false".equalsIgnoreCase(online)){
+				this.setOnline(OnlineType.OFFLINE);
 			} else {
-				return OnlineType.UNKNOWN;
+				this.setOnline(OnlineType.UNKNOWN);
 			}
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@Override
-	public String getCountry() {
-		return null;
-	}
-
-	@Override
-	public String getProvince() {
-		return null;
-	}
-
-	@Override
-	public String getCity() {
-		try {
-			return (json.has("city") ?json.getString("city") : null);
 		} catch (JSONException e) {
 			throw new RuntimeException(e);
 		}
-	}
-
-	@Override
-	public String getLocation() {
-		return null;
-	}
-
-	@Override
-	public String getUrlHomepage() {
-		return null;
-	}
-
-	@Override
-	public String getUrlHead() {
-		try {
-			return (json.has("logo50") ?json.getString("logo50") : null);
-		} catch (JSONException e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@Override
-	public String getUrlHeadBig() {
-		try {
-			return (json.has("logo120") ?json.getString("logo120") : null);
-		} catch (JSONException e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@Override
-	public String getMarriage() {
-		try {
-			return (json.has("marriage") ?json.getString("marriage") : null);
-		} catch (JSONException e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@Override
-	public String getEducation() {
-		return null;
-	}
-
-	@Override
-	public String getTrade() {
-		return null;
-	}
-
-	@Override
-	public String getJob() {
-		return null;
 	}
 }

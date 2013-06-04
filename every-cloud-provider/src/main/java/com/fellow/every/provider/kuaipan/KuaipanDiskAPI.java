@@ -31,6 +31,9 @@ import com.fellow.util.Assert;
 
 public class KuaipanDiskAPI extends AbstractAPI implements DiskAPI{
 
+	public static final String PROPERTY_APP_CHARSET = "app.charset";
+	public static final String DEFAULT_APP_CHARSET = "UTF-8";
+
 	public static final String PROPERTY_APP_ROOT = "app.root";
 	public static final String APP_ROOT_KUAIPAN = "kuaipan";
 	public static final String APP_ROOT_APP_FOLDER = "app_folder";
@@ -53,12 +56,17 @@ public class KuaipanDiskAPI extends AbstractAPI implements DiskAPI{
 	public static final String OP_DOWNLOAD = "/1/fileops/download_file";
 
 	private OAuth10Util oauth10Util;
-	
+
 	public OAuth10Util getOAuth10Util(){
 		if(oauth10Util == null){
-			new OAuth10Util(this.getAppKey(), this.getAppSecret());
+			oauth10Util = new OAuth10Util(this.getAppKey(), this.getAppSecret());
 		}
 		return oauth10Util;
+	}
+
+	public String getCharset(){
+		String charset = this.getProperty(PROPERTY_APP_CHARSET);
+		return (charset == null || charset.length() == 0 ? DEFAULT_APP_CHARSET : charset);
 	}
 
 	public String getRoot(){
@@ -93,9 +101,10 @@ public class KuaipanDiskAPI extends AbstractAPI implements DiskAPI{
 
 		try {
 			HTTPRequest request = new HTTPRequest(url);
-			HTTPResponseHandler handler = new StringHTTPResponseHandler();
+
+			StringHTTPResponseHandler handler = new StringHTTPResponseHandler(this.getCharset());
 			this.getHttpEngine().get(request, handler);
-			String info = handler.toString();
+			String info = handler.getString();
 			
 			if(info != null){
 				JSONObject json = new JSONObject(info);
@@ -125,9 +134,10 @@ public class KuaipanDiskAPI extends AbstractAPI implements DiskAPI{
 
 		try {
 			HTTPRequest request = new HTTPRequest(url);
-			HTTPResponseHandler handler = new StringHTTPResponseHandler();
+
+			StringHTTPResponseHandler handler = new StringHTTPResponseHandler(this.getCharset());
 			this.getHttpEngine().get(request, handler);
-			String info = handler.toString();
+			String info = handler.getString();
 			
 			if(info != null){
 				JSONObject json = new JSONObject(info);
@@ -163,9 +173,11 @@ public class KuaipanDiskAPI extends AbstractAPI implements DiskAPI{
 
 		try {
 			HTTPRequest request = new HTTPRequest(url);
-			HTTPResponseHandler handler = new StringHTTPResponseHandler();
+
+			StringHTTPResponseHandler handler = new StringHTTPResponseHandler(this.getCharset());
 			this.getHttpEngine().get(request, handler);
-			String info = handler.toString();
+			String info = handler.getString();
+			
 			if(info != null){
 				JSONObject json = new JSONObject(info);
 				JSONArray list = json.getJSONArray("files");
@@ -352,9 +364,10 @@ public class KuaipanDiskAPI extends AbstractAPI implements DiskAPI{
 	
 		try {
 			HTTPRequest request = new HTTPRequest(url);
-			HTTPResponseHandler handler = new StringHTTPResponseHandler();
+
+			StringHTTPResponseHandler handler = new StringHTTPResponseHandler(this.getCharset());
 			this.getHttpEngine().get(request, handler);
-			String info = handler.toString();
+			String info = handler.getString();
 			
 			if(info != null){
 				JSONObject json = new JSONObject(info);

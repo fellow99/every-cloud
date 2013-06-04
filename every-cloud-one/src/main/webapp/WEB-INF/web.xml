@@ -1,12 +1,87 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app id="WebApp_ID" version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+<!DOCTYPE web-app PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN" "http://java.sun.com/dtd/web-app_2_3.dtd">
+<web-app id="WebApp_ID">
 	<display-name>every-cloud-one</display-name>
-	<welcome-file-list>
-		<welcome-file>index.html</welcome-file>
-		<welcome-file>index.htm</welcome-file>
-		<welcome-file>index.jsp</welcome-file>
-		<welcome-file>default.html</welcome-file>
-		<welcome-file>default.htm</welcome-file>
-		<welcome-file>default.jsp</welcome-file>
-	</welcome-file-list>
+	
+	<distributable/>
+	
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+	      <param-value>classpath*:/conf/spring-*.xml</param-value>
+	</context-param>
+	
+	<filter>
+		<filter-name>encodingFilter</filter-name>
+		<filter-class>com.fellow.every.one.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+	
+	<filter>
+		<filter-name>LoginUserFilter</filter-name>
+		<filter-class>com.fellow.every.one.web.filter.LoginUserFilter</filter-class>
+		<init-param>
+			<param-name>login-url</param-name>
+			<param-value>/login/login.jsp</param-value>
+		</init-param>
+		<init-param>
+			<param-name>pass-url-regexp</param-name>
+			<param-value>/login/\S*</param-value>
+		</init-param>
+	</filter>
+	
+	<filter-mapping>
+		<filter-name>encodingFilter</filter-name>
+		<url-pattern>*.do</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>encodingFilter</filter-name>
+		<url-pattern>*.jsp</url-pattern>
+	</filter-mapping>
+	
+	<filter-mapping>
+		<filter-name>LoginUserFilter</filter-name>
+		<url-pattern>*.do</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>LoginUserFilter</filter-name>
+		<url-pattern>*.jsp</url-pattern>
+	</filter-mapping>
+  
+  
+	
+	<listener>  
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>  
+	</listener>
+	
+  
+	<servlet>    
+		<servlet-name>springmvc</servlet-name>    
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+	    <init-param>
+	      <param-name>contextConfigLocation</param-name>
+	      <param-value>classpath*:/conf/springmvc-servlet.xml</param-value>
+	    </init-param>
+		<load-on-startup>2</load-on-startup>
+	</servlet>
+	
+	<servlet-mapping>
+	    <servlet-name>springmvc</servlet-name>
+	    <url-pattern>*.do</url-pattern>
+	</servlet-mapping>
+
+	<session-config> 
+		<session-timeout>60</session-timeout> 
+	</session-config>
+
+	<mime-mapping>  
+	     <extension>dbf</extension>  
+	     <mime-type>application/octet-stream</mime-type>  
+	</mime-mapping> 
+    <mime-mapping>
+        <extension>xls</extension>
+        <mime-type>application/vnd.ms-excel</mime-type>
+    </mime-mapping>
 </web-app>

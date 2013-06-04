@@ -20,7 +20,13 @@ import com.fellow.every.http.HTTPStreamUtil;
 public class HTTPURLConnection implements HTTPEngine {
 	
 	public HTTPURLConnection(){
-		CookieHandler.setDefault(new CookieManager(null, CookiePolicy.ACCEPT_ALL));
+		this(false);
+	}
+	
+	public HTTPURLConnection(boolean acceptAllCookie){
+		if(acceptAllCookie){
+			CookieHandler.setDefault(new CookieManager(null, CookiePolicy.ACCEPT_ALL));
+		}
 	}
 
 	@Override

@@ -16,8 +16,6 @@ import test.auth.common.AbstractShellAuthenticatorV20;
 import test.auth.common.AccessTokenUtil;
 
 public class BaiduShellAuthenticator extends AbstractShellAuthenticatorV20{
-	
-	public final static String ROOT = "/apps/EveryDisk";
 
 	public final static Class<? extends org.scribe.builder.api.Api> PROVIDER = BaiduOAuth2API.class;
 

@@ -3,97 +3,48 @@ package com.fellow.every.provider.baidu;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.fellow.every.disk.FileInfo;
+import com.fellow.every.base.AbstractFileInfo;
 import com.fellow.every.disk.FileType;
 
-public class BaiduFileInfo implements FileInfo{
-	private String root;
-	private JSONObject json;
+public class BaiduFileInfo extends AbstractFileInfo{
+	/** serialVersionUID */
+	private static final long serialVersionUID = 1L;
 	
 	public BaiduFileInfo(JSONObject json, String root){
-		this.root = root;
-		this.json = json;
-	}
-
-	@Override
-	public String toString(){
-		return this.getClass().getName() + "-" + json;
-	}
-	
-	@Override
-	public String getId() {
 		try {
-			return json.getString("fs_id");
+			this.setId(json.getString("fs_id"));
+
+			String path = json.getString("path");
+			if(path == null){
+				this.setPath(null);
+			} else if(path.indexOf(root) == 0){
+				this.setPath(path.substring(root.length()));
+			} else {
+				this.setPath(path);
+			}
+			int i = (this.getPath() == null ? -1 :this.getPath().lastIndexOf("/"));
+			if(i < 0){
+				this.setName("");
+			} else {
+				this.setName(this.getPath().substring(i+1));
+			}
+			
+			this.setName(json.getString("name"));
+			this.setSize(json.getLong("size"));
+			this.setCreateTime(json.getLong("ctime"));
+			this.setLastModifiedTime(json.getLong("mtime"));
+			this.setDeleted(false);
+			
+			String type = json.getString("isdir");
+			if("0".equalsIgnoreCase(type)){
+				this.setType(FileType.FILE);
+			} else if("1".equalsIgnoreCase(type)){
+				this.setType(FileType.FOLDER);
+			} else {
+				this.setType(FileType.NULL);
+			}
 		} catch (JSONException e) {
 			throw new RuntimeException(e);
 		}
-	}
-	@Override
-	public String getName() {
-		String path = getPath();
-		int i = (path == null ? -1 :path.lastIndexOf("/"));
-		if(i < 0){
-			return "";
-		} else {
-			return path.substring(i+1);
-		}
-	}
-	@Override
-	public String getPath() {
-		try {
-			String path = json.getString("path");
-			if(path == null){
-				return null;
-			} else if(path.indexOf(root) == 0){
-				return path.substring(root.length());
-			} else {
-				return path;
-			}
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-	@Override
-	public FileType getType() {
-		try {
-			String isdir = json.getString("isdir");
-			if("0".equalsIgnoreCase(isdir)){
-				return FileType.FILE;
-			} else if("1".equalsIgnoreCase(isdir)){
-				return FileType.FOLDER;
-			} else {
-				return FileType.NULL;
-			}
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-	@Override
-	public long getSize() {
-		try {
-			return json.getLong("size");
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-	@Override
-	public long getCreateTime() {
-		try {
-			return json.getLong("ctime");
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-	@Override
-	public long getLastModifiedTime() {
-		try {
-			return json.getLong("mtime");
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-	@Override
-	public boolean isDeleted() {
-		return false;
 	}
 }

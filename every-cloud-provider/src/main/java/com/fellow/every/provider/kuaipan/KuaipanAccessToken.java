@@ -6,6 +6,8 @@ import com.fellow.every.base.AbstractAccessToken;
 import com.fellow.every.exception.ApiException;
 
 public class KuaipanAccessToken extends AbstractAccessToken{
+	/** serialVersionUID */
+	private static final long serialVersionUID = 1L;
 	
 	@Override
 	public void load(String raw) throws ApiException {

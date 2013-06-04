@@ -3,35 +3,17 @@ package com.fellow.every.provider.weibo;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.fellow.every.user.AccountInfo;
+import com.fellow.every.base.AbstractAccountInfo;
 
-public class WeiboAccountInfo implements AccountInfo{
-	private JSONObject json;
+public class WeiboAccountInfo extends AbstractAccountInfo{
+	/** serialVersionUID */
+	private static final long serialVersionUID = 1L;
 	
 	public WeiboAccountInfo(JSONObject json){
-		this.json = json;
-	}
-	
-	public JSONObject getJson(){
-		return json;
-	}
-
-	@Override
-	public String toString(){
-		return this.getClass().getName() + "-" + json;
-	}
-
-	@Override
-	public String getId() {
 		try {
-			return json.getString("uid");
+			this.setId(json.getString("uid"));
 		} catch (JSONException e) {
 			throw new RuntimeException(e);
 		}
-	}
-
-	@Override
-	public String getName() {
-		return null;
 	}
 }

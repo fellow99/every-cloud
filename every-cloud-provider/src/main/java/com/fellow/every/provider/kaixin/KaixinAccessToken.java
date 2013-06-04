@@ -6,6 +6,9 @@ import com.fellow.every.base.AbstractAccessToken;
 import com.fellow.every.exception.ApiException;
 
 public class KaixinAccessToken extends AbstractAccessToken{
+	/** serialVersionUID */
+	private static final long serialVersionUID = 1L;
+	
 	private String scope;
 
 	@Override

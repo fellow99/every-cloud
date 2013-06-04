@@ -17,9 +17,17 @@ import com.fellow.util.Assert;
 
 public class KanboxUserAPI extends AbstractAPI implements UserAPI {
 
+	public static final String PROPERTY_APP_CHARSET = "app.charset";
+	public static final String DEFAULT_APP_CHARSET = "UTF-8";
+
 	public static final String URL_API = "https://api.kanbox.com";
 
 	public static final String OP_INFO = "/0/info";
+
+	public String getCharset(){
+		String charset = this.getProperty(PROPERTY_APP_CHARSET);
+		return (charset == null || charset.length() == 0 ? DEFAULT_APP_CHARSET : charset);
+	}
 
 	public void assertInit(){
 		Assert.notNull(this.getHttpEngine(), "HTTPEngine Object is null");
@@ -48,10 +56,11 @@ public class KanboxUserAPI extends AbstractAPI implements UserAPI {
 		try {
 			HTTPRequest request = new HTTPRequest(URL_API + OP_INFO);
 			request.addQueryParameters("bearer_token", accessToken.getAccessToken());
-			
-			HTTPResponseHandler handler = new StringHTTPResponseHandler();
+
+			StringHTTPResponseHandler handler = new StringHTTPResponseHandler(this.getCharset());
 			this.getHttpEngine().get(request, handler);
-			String info = handler.toString();
+			String info = handler.getString();
+			
 			if(info != null){
 				JSONObject json = new JSONObject(info);
 				user = new KanboxUserInfo(json);

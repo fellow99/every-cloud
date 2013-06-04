@@ -1,0 +1,64 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+
+{#if $P.provider && $P.provider != ""}
+
+
+<!-- 文件列表 -->
+<div style="float:left;width:100%">
+	<div>
+		<div style="margin-left:70px;padding:3px;">
+			<div>
+				当前目录：{$P.currentPath}
+			</div>
+		</div>
+	</div>
+	<hr />
+	<div>
+		<div style="margin-left:70px;padding:3px;">
+			<div>
+			{#if $P.currentPath && $P.currentPath != "" && $P.currentPath != "/"}
+				<a href="javascript:void(0)" onclick="api.disk.list('{$P.provider}', '{$P.parentPath}')">上一级目录</a>
+			{#/if}
+				<a href="javascript:void(0)" onclick="api.disk.mkdir('{$P.provider}', '{$P.currentPath}')">创建子目录</a>
+			</div>
+		</div>
+	</div>
+	<hr />
+	<div style="clear:both;"></div>
+{#foreach $T.items as item}
+	<div>
+		<!-- <div style="float:left;padding:3px;">
+			<img src="../api/disk-data.do?method=thumbnail&provider={$P.provider}&path={$T.item.path}">
+		</div>
+		 -->
+		<div style="margin-left:70px;padding:3px;">
+			<div>
+			{$T.item.name}
+			大小：{$T.item.size}
+			修改时间：{toDatetime(new Date($T.item.lastModifiedTime * 1000), "yyyy-MM-dd hh:mm")}
+			创建时间：{toDatetime(new Date($T.item.createTime * 1000), "yyyy-MM-dd hh:mm")}
+			</div>
+			<div>
+			{#if $T.item.size && $T.item.size == "0"}
+				<a href="javascript:void(0)" onclick="api.disk.list('{$P.provider}', '{$T.item.path}')">进入</a>
+			{#else}
+				<a href="javascript:void(0)" onclick="api.disk.download('{$P.provider}', '{$T.item.path}')">下载</a>
+			{#/if}
+				|
+				<a href="javascript:void(0)" onclick="api.disk.cp('{$P.provider}', '{$T.item.path}')">复制</a>
+				<a href="javascript:void(0)" onclick="api.disk.mv('{$P.provider}', '{$T.item.path}')">移动</a>
+				<a href="javascript:void(0)" onclick="api.disk.rm('{$P.provider}', '{$T.item.path}')">删除</a>
+				|
+				<a href="javascript:void(0)" onclick="api.disk.metadata('{$P.provider}', '{$T.item.path}')">信息</a>
+				<a href="javascript:void(0)" onclick="api.disk.share('{$P.provider}', '{$T.item.path}')">分享</a>
+			</div>
+		</div>
+	
+	</div>
+	<hr />
+	<div style="clear:both;"></div>
+{#/for}
+</div>
+
+{#/if}

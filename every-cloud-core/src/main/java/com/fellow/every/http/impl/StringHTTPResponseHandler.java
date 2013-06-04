@@ -11,10 +11,24 @@ import com.fellow.every.http.HTTPStreamUtil;
 
 public class StringHTTPResponseHandler implements HTTPResponseHandler{
 	private String info;
-	public String toString(){return info;}
+	private String charset;
+	
+	public StringHTTPResponseHandler(){
+		
+	}
+	public StringHTTPResponseHandler(String charset){
+		this.charset = charset;
+	}
+	public String getString(){
+		return info;
+	}
 	public void handle(HTTPRequest request, HTTPResponse response, InputStream is) throws ServerException, ApiException{
 		if(response.getCode() == 200){
-			info = HTTPStreamUtil.toString(is);
+			if(charset == null || charset.length() == 0){
+				info = HTTPStreamUtil.toString(is);
+			} else {
+				info = HTTPStreamUtil.toString(is, charset);
+			}
 		} else {
 			String url = request.getUrl();
 			String code = new Integer(response.getCode()).toString();

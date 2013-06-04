@@ -17,9 +17,17 @@ import com.fellow.util.Assert;
 
 public class BaiduUserAPI extends AbstractAPI implements UserAPI{
 
+	public static final String PROPERTY_APP_CHARSET = "app.charset";
+	public static final String DEFAULT_APP_CHARSET = "UTF-8";
+
 	public static final String URL_OPEN_API = "https://openapi.baidu.com";
 	public static final String URL_PASSPORT_USERS_MY = "/rest/2.0/passport/users/getLoggedInUser";
 	public static final String URL_PASSPORT_USERS_INFO = "/rest/2.0/passport/users/getInfo";
+
+	public String getCharset(){
+		String charset = this.getProperty(PROPERTY_APP_CHARSET);
+		return (charset == null || charset.length() == 0 ? DEFAULT_APP_CHARSET : charset);
+	}
 
 	public void assertInit(){
 		Assert.notNull(this.getHttpEngine(), "HTTPEngine Object is null");
@@ -42,10 +50,10 @@ public class BaiduUserAPI extends AbstractAPI implements UserAPI{
 		try {
 			HTTPRequest request = new HTTPRequest(URL_OPEN_API + URL_PASSPORT_USERS_MY);
 			request.addQueryParameters("access_token", accessToken.getAccessToken());
-			
-			HTTPResponseHandler handler = new StringHTTPResponseHandler();
+
+			StringHTTPResponseHandler handler = new StringHTTPResponseHandler(this.getCharset());
 			this.getHttpEngine().get(request, handler);
-			String info = handler.toString();
+			String info = handler.getString();
 			
 			if(info != null){
 				JSONObject json = new JSONObject(info);
@@ -67,10 +75,10 @@ public class BaiduUserAPI extends AbstractAPI implements UserAPI{
 		try {
 			HTTPRequest request = new HTTPRequest(URL_OPEN_API + URL_PASSPORT_USERS_INFO);
 			request.addQueryParameters("access_token", accessToken.getAccessToken());
-			
-			HTTPResponseHandler handler = new StringHTTPResponseHandler();
+
+			StringHTTPResponseHandler handler = new StringHTTPResponseHandler(this.getCharset());
 			this.getHttpEngine().get(request, handler);
-			String info = handler.toString();
+			String info = handler.getString();
 			
 			if(info != null){
 				JSONObject json = new JSONObject(info);
@@ -93,10 +101,10 @@ public class BaiduUserAPI extends AbstractAPI implements UserAPI{
 			HTTPRequest request = new HTTPRequest(URL_OPEN_API + URL_PASSPORT_USERS_INFO);
 			request.addQueryParameters("access_token", accessToken.getAccessToken());
 			request.addQueryParameters("uid", id);
-			
-			HTTPResponseHandler handler = new StringHTTPResponseHandler();
+
+			StringHTTPResponseHandler handler = new StringHTTPResponseHandler(this.getCharset());
 			this.getHttpEngine().get(request, handler);
-			String info = handler.toString();
+			String info = handler.getString();
 			
 			if(info != null){
 				JSONObject json = new JSONObject(info);

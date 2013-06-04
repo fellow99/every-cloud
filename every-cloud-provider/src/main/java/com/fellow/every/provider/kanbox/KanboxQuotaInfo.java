@@ -1,37 +1,20 @@
 package com.fellow.every.provider.kanbox;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.fellow.every.disk.QuotaInfo;
+import com.fellow.every.base.AbstractQuotaInfo;
 
-public class KanboxQuotaInfo implements QuotaInfo{
-	private JSONObject json;
+public class KanboxQuotaInfo extends AbstractQuotaInfo{
+	/** serialVersionUID */
+	private static final long serialVersionUID = 1L;
 	
 	public KanboxQuotaInfo(JSONObject json){
-		this.json = json;
-	}
-
-	@Override
-	public String toString(){
-		return this.getClass().getName() + "-" + json;
-	}
-
-	@Override
-	public long getQuota() {
 		try {
-			return json.getLong("spaceQuota");
-		} catch (Exception e) {
+			this.setQuota(json.getLong("spaceQuota"));
+			this.setUsed(json.getLong("spaceUsed"));
+		} catch (JSONException e) {
 			throw new RuntimeException(e);
 		}
 	}
-
-	@Override
-	public long getUsed() {
-		try {
-			return json.getLong("spaceUsed");
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
 }

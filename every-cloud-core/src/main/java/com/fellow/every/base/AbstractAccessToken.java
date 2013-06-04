@@ -3,7 +3,9 @@ package com.fellow.every.base;
 import com.fellow.every.auth.AccessToken;
 import com.fellow.every.exception.ApiException;
 
-public class AbstractAccessToken implements AccessToken{
+public class AbstractAccessToken implements AccessToken, java.io.Serializable{
+	/** serialVersionUID */
+	private static final long serialVersionUID = 1L;
 
 	private String accessToken;
 	private String accessTokenSecret;

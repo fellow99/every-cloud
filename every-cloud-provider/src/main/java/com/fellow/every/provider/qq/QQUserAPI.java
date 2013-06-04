@@ -8,7 +8,6 @@ import com.fellow.every.base.AbstractAPI;
 import com.fellow.every.exception.ApiException;
 import com.fellow.every.exception.ServerException;
 import com.fellow.every.http.HTTPRequest;
-import com.fellow.every.http.HTTPResponseHandler;
 import com.fellow.every.http.impl.StringHTTPResponseHandler;
 import com.fellow.every.user.AccountInfo;
 import com.fellow.every.user.UserAPI;
@@ -17,6 +16,9 @@ import com.fellow.util.Assert;
 
 public class QQUserAPI extends AbstractAPI implements UserAPI {
 
+	public static final String PROPERTY_APP_CHARSET = "app.charset";
+	public static final String DEFAULT_APP_CHARSET = "UTF-8";
+	
 	public static final String APP_OAUTH_VERSION = "2.a";
 	public static final String APP_FORMAT = "json";
 	
@@ -24,6 +26,11 @@ public class QQUserAPI extends AbstractAPI implements UserAPI {
 
 	public static final String OP_USER_INFO = "/api/user/info";
 	public static final String OP_USER_OTHER_INFO = "/api/user/other_info";
+
+	public String getCharset(){
+		String charset = this.getProperty(PROPERTY_APP_CHARSET);
+		return (charset == null || charset.length() == 0 ? DEFAULT_APP_CHARSET : charset);
+	}
 	
 	public void assertInit(){
 		Assert.notNull(this.getHttpEngine(), "HTTPEngine Object is null");
@@ -36,7 +43,7 @@ public class QQUserAPI extends AbstractAPI implements UserAPI {
 		Assert.notNull(accessToken.getAccessToken(), "AccessToken is null");
 		Assert.isInstanceOf(QQAccessToken.class, accessToken, "AccessToken is not an instance of " + QQAccessToken.class);
 	}
-
+	
 	@Override
 	public AccountInfo myAccount(AccessToken accessToken) throws ServerException, ApiException {
 		return myInfo(accessToken);
@@ -58,10 +65,10 @@ public class QQUserAPI extends AbstractAPI implements UserAPI {
 			request.addQueryParameters("oauth_version", APP_OAUTH_VERSION);
 			request.addQueryParameters("format", APP_FORMAT);
 			
-			
-			HTTPResponseHandler handler = new StringHTTPResponseHandler();
+
+			StringHTTPResponseHandler handler = new StringHTTPResponseHandler(this.getCharset());
 			this.getHttpEngine().get(request, handler);
-			String info = handler.toString();
+			String info = handler.getString();
 			
 			if(info != null){
 				JSONObject json = new JSONObject(info);
@@ -92,9 +99,9 @@ public class QQUserAPI extends AbstractAPI implements UserAPI {
 			request.addQueryParameters("format", APP_FORMAT);
 			request.addQueryParameters("fopenid", id);
 			
-			HTTPResponseHandler handler = new StringHTTPResponseHandler();
+			StringHTTPResponseHandler handler = new StringHTTPResponseHandler(this.getCharset());
 			this.getHttpEngine().get(request, handler);
-			String info = handler.toString();
+			String info = handler.getString();
 			
 			if(info != null){
 				JSONObject json = new JSONObject(info);
