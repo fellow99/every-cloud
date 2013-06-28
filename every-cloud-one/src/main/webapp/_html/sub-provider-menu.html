@@ -3,7 +3,7 @@
 {#foreach $T.items as item}
 	<div style="padding:3px">
 	{#if ! $T.item.capability[$P.method] || $T.item.capability[$P.method] != "true"}
-		<a href="javascript:void(0)" >xx {$T.item.name}</a>
+		<a href="javascript:void(0)" style="text-decoration:line-through" >{$T.item.name}</a>
 	{#elseif ! $T.item.login || $T.item.login != "true"}
 		<a href="../login/do.jsp?p={$T.item.name}">{$T.item.name}></a>
 	{#else}

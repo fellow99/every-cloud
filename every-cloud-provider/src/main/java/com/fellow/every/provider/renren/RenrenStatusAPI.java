@@ -19,17 +19,22 @@ import com.fellow.every.status.StatusAPI;
 import com.fellow.every.status.StatusCommentInfo;
 import com.fellow.every.status.StatusInfo;
 import com.fellow.every.status.StatusURL;
+import com.fellow.every.user.UserInfo;
 import com.fellow.util.Assert;
 
+/**
+ * TODO:
+ */
 public class RenrenStatusAPI extends AbstractAPI implements StatusAPI {
 
 	public static final String PROPERTY_APP_CHARSET = "app.charset";
 	public static final String DEFAULT_APP_CHARSET = "UTF-8";
-	
-	public static final String URL_API = "https://api.weibo.com";
-	
-	public static final String OP_ACCOUNT_GET_UID = "/2/account/get_uid.json";
-	public static final String OP_USERS_GET_LOGIN = "/2/account/get_uid.json";
+
+	public static final String URL_API = "https://api.renren.com/restserver.do";
+
+	public static final String OP_USERS_GET_LOGIN = "x";
+	public static final String OP_STATUS_SET = "status.set";
+	public static final String OP_STATUS_GETS = "status.gets";
 
 	public String getCharset(){
 		String charset = this.getProperty(PROPERTY_APP_CHARSET);

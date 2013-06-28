@@ -2,9 +2,7 @@
 <!DOCTYPE web-app PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN" "http://java.sun.com/dtd/web-app_2_3.dtd">
 <web-app id="WebApp_ID">
 	<display-name>every-cloud-one</display-name>
-	
-	<distributable/>
-	
+	<!-- <distributable/> -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 	      <param-value>classpath*:/conf/spring-*.xml</param-value>

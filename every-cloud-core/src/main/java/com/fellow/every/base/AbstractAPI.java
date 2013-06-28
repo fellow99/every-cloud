@@ -19,6 +19,10 @@ public abstract class AbstractAPI {
 		this.properties.putAll(properties);
 	}
 
+	protected Properties getProperties() {
+		return properties;
+	}
+
 	public String getProperty(String key) {
 		return properties.getProperty(key);
 	}

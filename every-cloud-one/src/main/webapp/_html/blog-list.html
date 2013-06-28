@@ -1,0 +1,52 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+
+{#if $P.provider && $P.provider != ""}
+
+TODO:blog
+
+<!-- 列表类型 -->
+<div>
+	<div style="float:left;margin:5px;">
+		<a href="javascript:void(0)" onclick="api.status.list('{$P.provider}', 'public')">public</a>
+	</div>
+	<div style="float:left;margin:5px;">
+		<a href="javascript:void(0)" onclick="api.status.list('{$P.provider}', 'home')">home</a>
+	</div>
+	<div style="float:left;margin:5px;">
+		<a href="javascript:void(0)" onclick="api.status.list('{$P.provider}', 'me')">me</a>
+	</div>
+	<div style="float:left;margin:5px;">
+		<a href="javascript:void(0)" onclick="api.status.list('{$P.provider}', 'friends')">friends</a>
+	</div>
+	<div style="float:left;margin:5px;">
+		<a href="javascript:void(0)" onclick="api.status.list('{$P.provider}', 'mentions')">mentions</a>
+	</div>
+</div>
+
+<!-- 微博列表 -->
+<div style="float:left;width:100%">
+{#foreach $T.items as item}
+	<div>
+		<div style="float:left;padding:3px;">
+			<img src="{$T.item.user.urlHead}">
+		</div>
+		<div style="margin-left:70px;padding:3px;">
+			{#if $P.provider == "weibo"}
+				<div><a href="http://www.weibo.com/{$T.item.user.name}" target="_blank">{$T.item.user.nickname}</a></div>
+			{#elseif $P.provider == "qq"}
+				<div><a href="http://t.qq.com/{$T.item.user.name}" target="_blank">{$T.item.user.nickname}</a></div>
+			{#else}
+				<div>{$T.item.user.nickname}</div>
+			{#/if}
+			<div>{$T.item.content}</div>
+			<div>{toDatetime(new Date($T.item.datetime * 1000), "yyyy-MM-dd hh:mm")}</div>
+		</div>
+	
+	</div>
+	<hr />
+	<div style="clear:both;"></div>
+{#/for}
+</div>
+
+{#/if}
