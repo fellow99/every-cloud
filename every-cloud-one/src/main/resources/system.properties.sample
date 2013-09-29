@@ -1,0 +1,7 @@
+provider.weibo.app.key=xxxx
+provider.weibo.app.secret=xxx
+provider.weibo.app.callback=http://127.0.0.1:8080/one/login/callback.jsp?p=weibo
+
+provider.qq.app.key=xxx
+provider.qq.app.secret=xxx
+provider.qq.app.callback=http://127.0.0.1:8080/one/login/callback.jsp?p=qq
