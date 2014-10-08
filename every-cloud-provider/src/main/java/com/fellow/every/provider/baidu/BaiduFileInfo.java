@@ -29,13 +29,13 @@ public class BaiduFileInfo extends AbstractFileInfo{
 				this.setName(this.getPath().substring(i+1));
 			}
 			
-			this.setName(json.getString("name"));
-			this.setSize(json.getLong("size"));
-			this.setCreateTime(json.getLong("ctime"));
-			this.setLastModifiedTime(json.getLong("mtime"));
+			this.setName(json.has("name") ? json.getString("name") : null);
+			this.setSize(json.has("size") ? json.getLong("size") : -1);
+			this.setCreateTime(json.has("ctime") ? json.getLong("ctime") : null);
+			this.setLastModifiedTime(json.has("mtime") ? json.getLong("mtime"): null);
 			this.setDeleted(false);
 			
-			String type = json.getString("isdir");
+			String type = (json.has("isdir") ? json.getString("isdir") : null);
 			if("0".equalsIgnoreCase(type)){
 				this.setType(FileType.FILE);
 			} else if("1".equalsIgnoreCase(type)){
