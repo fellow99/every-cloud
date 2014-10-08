@@ -7,9 +7,6 @@
         <dependent-module archiveName="every-cloud-core-0.2a.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/every-cloud-core/every-cloud-core">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="scribe-1.3.5.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/scribe/scribe">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
         <dependent-module archiveName="every-cloud-provider-0.2a.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/every-cloud-provider/every-cloud-provider">
             <dependency-type>uses</dependency-type>
         </dependent-module>
